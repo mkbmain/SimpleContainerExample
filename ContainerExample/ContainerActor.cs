@@ -17,7 +17,7 @@ namespace ContainerExample
         internal Type Type;
 
         private ParameterInfo[] _parameterInfos = null;
-        public ParameterInfo[] ParamaterInfo(Dictionary<Type,ContainerActor> definedTypes)
+        public IEnumerable<ParameterInfo> ParamaterInfo(Dictionary<Type,ContainerActor> definedTypes)
         {
             if (_parameterInfos != null)
             {
