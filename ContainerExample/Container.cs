@@ -32,13 +32,8 @@ namespace ContainerExample
             {
                 return item;
             }
-
-            var constructorInfos = details.Type.GetConstructors();
-
-            var info = constructorInfos.FirstOrDefault(f =>
-                f.GetParameters().Length == 0 || f.GetParameters().Any(t => Types.ContainsKey(t.ParameterType)));
             
-            return Activator.CreateInstance(details.Type, info?.GetParameters().Select(t => Resolve(t.ParameterType)).ToArray());
+            return Activator.CreateInstance(details.Type, details?.ParamaterInfo(Types).Select(t => Resolve(t.ParameterType)).ToArray());
         }
     }
 }

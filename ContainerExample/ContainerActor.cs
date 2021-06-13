@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ContainerExample
 {
@@ -14,6 +16,20 @@ namespace ContainerExample
         internal Type FromType;
         internal Type Type;
 
+        private ParameterInfo[] _parameterInfos = null;
+        public ParameterInfo[] ParamaterInfo(Dictionary<Type,ContainerActor> definedTypes)
+        {
+            if (_parameterInfos != null)
+            {
+                return _parameterInfos;
+            }
+            var constructorInfos = Type.GetConstructors();
+
+            _parameterInfos = constructorInfos.FirstOrDefault(f =>
+                f.GetParameters().Length == 0 || f.GetParameters().Any(t => definedTypes.ContainsKey(t.ParameterType)))?.GetParameters();
+           
+            return _parameterInfos;
+        }
         public virtual object Resolve(Container container)
         {
             return null;
