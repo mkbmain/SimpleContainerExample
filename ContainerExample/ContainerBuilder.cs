@@ -7,11 +7,11 @@ namespace ContainerExample
 {
     public class ContainerBuilder
     {
-        private List<ContainerActor> ContainerActors = new List<ContainerActor>();
+        private List<ResolveActor> ContainerActors = new List<ResolveActor>();
 
-        public ContainerActor<T> Register<T>()
+        public ResolveActor<T> Register<T>()
         {
-            var actor = new ContainerActor<T>(typeof(T));
+            var actor = new ResolveActor<T>(typeof(T));
             ContainerActors.Add(actor);
             return actor;
         }
@@ -28,7 +28,7 @@ namespace ContainerExample
             return new Container(lookupDict);
         }
 
-        private IEnumerable<ParameterInfo> ParamaterInfo(Type type, Dictionary<Type, ContainerActor> definedTypes)
+        private IEnumerable<ParameterInfo> ParamaterInfo(Type type, Dictionary<Type, ResolveActor> definedTypes)
         {
             var constructorInfos = type.GetConstructors();
 

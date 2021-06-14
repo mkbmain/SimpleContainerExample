@@ -7,9 +7,9 @@ namespace ContainerExample
 {
  public class Container
     {
-        private Dictionary<Type, ContainerActor> Types;
+        private Dictionary<Type, ResolveActor> Types;
 
-        public Container(Dictionary<Type, ContainerActor> types)
+        public Container(Dictionary<Type, ResolveActor> types)
         {
             Types = types;
         }
@@ -21,19 +21,19 @@ namespace ContainerExample
 
         public object Resolve(Type T)
         {
-            if (Types.TryGetValue(T, out var details) == false)
+            if (Types.TryGetValue(T, out var resolveActor) == false)
             {
                 throw new NoRegistrationException(
                     $"type of {T} is not registered {Environment.NewLine}{string.Join(Environment.NewLine, new StackTrace(true).GetFrames().Take(5).Select(f => $"{f.GetFileName()} => {f.GetMethod()} => {f.GetFileLineNumber()}"))}");
             }
 
-            var item = details.Resolve(this);
+            var item = resolveActor.Resolve(this);
             if (item != null)
             {
                 return item;
             }
             
-            return Activator.CreateInstance(details.Type, details?.ParameterInfo.Select(t => Resolve(t.ParameterType)).ToArray());
+            return Activator.CreateInstance(resolveActor.Type, resolveActor?.ParameterInfo.Select(t => Resolve(t.ParameterType)).ToArray());
         }
     }
 }

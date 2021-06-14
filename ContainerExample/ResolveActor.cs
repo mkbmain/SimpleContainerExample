@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace ContainerExample
 {
-    public abstract class ContainerActor
+    public abstract class ResolveActor
     {
-        public ContainerActor(Type T)
+        public ResolveActor(Type T)
         {
             FromType = T;
             Type = T;
@@ -35,7 +35,7 @@ namespace ContainerExample
         }
     }
 
-    public class ContainerActor<T> : ContainerActor
+    public class ResolveActor<T> : ResolveActor
     {
         public Func<Container, T> ResolveFunc = null;
 
@@ -49,7 +49,7 @@ namespace ContainerExample
             ResolveFunc = func;
         }
 
-        public ContainerActor(Type T) : base(T)
+        public ResolveActor(Type T) : base(T)
         {
         }
     }
