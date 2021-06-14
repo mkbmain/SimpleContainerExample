@@ -33,7 +33,11 @@ namespace ContainerExample
                 return item;
             }
             
+            // Test speed of this faster activator are possible using the il gen or lambda compiles at runtime
+            // but not sure what performance is like in .net core and if its worth the effort
+            // https://stackoverflow.com/questions/6582259/fast-creation-of-objects-instead-of-activator-createinstancetype
             return Activator.CreateInstance(resolveActor.Type, resolveActor?.ParameterInfo.Select(t => Resolve(t.ParameterType)).ToArray());
+
         }
     }
 }
