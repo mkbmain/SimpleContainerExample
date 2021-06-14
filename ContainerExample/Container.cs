@@ -33,7 +33,7 @@ namespace ContainerExample
                 return item;
             }
             
-            return Activator.CreateInstance(details.Type, details?.ParamaterInfo(Types).Select(t => Resolve(t.ParameterType)).ToArray());
+            return Activator.CreateInstance(details.Type, details?.ParameterInfo.Select(t => Resolve(t.ParameterType)).ToArray());
         }
     }
 }
