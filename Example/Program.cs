@@ -12,10 +12,12 @@ namespace Example
             cb.Register<Test>();
             cb.Register<boom>();
             cb.Register<oo>().AsImplementedInterface();
+            cb.Register<Ioo>().As<Io>();
             cb.Register<oo1>().Resolve(f => new oo1("test", f.Resolve<o>(),f.Resolve<boom>()));
             var con = cb.Build;
             var t = con.Resolve<Test>();
             var tw = con.Resolve<oo1>();
+            var t1w = con.Resolve<Io>();
         }
     }
 
@@ -40,6 +42,19 @@ namespace Example
         }
     }
 
+    
+    public interface Io
+    {
+        public void Print();
+    }
+
+    public class Ioo : Io
+    {
+        void Io.Print()
+        {
+            Console.WriteLine("done");
+        }
+    }
     public class oo1
     {
         public oo1(string name, o item,boom t)
